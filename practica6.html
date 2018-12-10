@@ -1,0 +1,514 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Pr&aacute;ctica 6: Sistemas diferenciales</title><meta name="generator" content="MATLAB 9.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-12-10"><meta name="DC.source" content="practica6.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Pr&aacute;ctica 6: Sistemas diferenciales</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Datos generales:</a></li><li><a href="#3">Objetivos:</a></li><li><a href="#5">Introducci&oacute;n</a></li><li><a href="#6">Desarrollo</a></li><li><a href="#7">Entregable 1</a></li><li><a href="#8">Entregable 2</a></li><li><a href="#9">Entregable 3</a></li><li><a href="#10">Entregable 4</a></li><li><a href="#11">Entregable 5</a></li><li><a href="#12">Entregable 6</a></li></ul></div><h2 id="1">Datos generales:</h2><p>Autor: Marmolejo Mart&iacute;nez Hamlet Jorge</p><pre class="codeinput"><span class="comment">% Grupo: 2TV2</span>
+
+<span class="comment">% Profesor: Dr. Rafael Mart&iacute;nez Mart&iacute;nez</span>
+</pre><h2 id="3">Objetivos:</h2><div><ul><li>Conocer comandos para obtener las funciones de respuesta de un sistema</li><li>Graficar las expresiones de respuesta</li></ul></div><h2 id="5">Introducci&oacute;n</h2><p>En esta practica se mostrar&aacute; como un programa resuelve sistemas diferenciales de orden n mediante la transformada de Laplace y Fourier, el programa despliega la funci&oacute;n de trasnferencia, la respuesta al impulso, la respuesta a entrada cero, la respuesta a estado cero, la respuesta total con condiciones iniciales y las gr&aacute;ficas correspondientes</p><h2 id="6">Desarrollo</h2><h2 id="7">Entregable 1</h2><p>Se tiene el sistema del ejemplo Muestra la funci&oacute;n de transferencia del sistema. Con la se&ntilde;al de entrada <img src="practica6_eq05769353784425442863.png" alt="$$x(t)=exp(-t)cos(t)u(t)$">$</p><pre class="codeinput">syms <span class="string">t</span>
+transformadaLaplace([2 2 1 1],[2 -1 3],[2 3 1],[0 1],exp(-t)*cos(t)*heaviside(t),10)
+</pre><pre class="codeoutput"> 
+APLICAMOS TRANSFORMADA DE LAPLACE y substituimos condiciones iniciales
+ 
+                             2    2         3
+2 Y(s) - 5 s + 2 s Y(s) - 2 s  + s  Y(s) + s  Y(s) - 8
+
+=
+                     2
+2 X(s) - s X(s) + 3 s  X(s) - 3
+
+ 
+SUBSTITUIMOS LA TRANSFORMADA DE LA ENTRADA
+ 
+                             2    2         3
+2 Y(s) - 5 s + 2 s Y(s) - 2 s  + s  Y(s) + s  Y(s) - 8
+
+=
+                                 2
+  2 (s + 1)      s (s + 1)    3 s  (s + 1)
+------------ - ------------ + ------------ - 3
+       2              2              2
+(s + 1)  + 1   (s + 1)  + 1   (s + 1)  + 1
+
+ 
+DESPEJAMOS Y(s)
+ 
+Y(s)=
+    4       3       2
+ 2 s  + 12 s  + 21 s  + 21 s + 12
+---------------------------------
+ 5      4      3      2
+s  + 3 s  + 6 s  + 8 s  + 8 s + 4
+
+ 
+DESARROLLAMOS LAS FRACCIONES PARCIALES DE Y(s)
+ 
+Y(s)=
+7 s   19                       3
+--- + --                   s - -
+ 3     6       2               2
+-------- + --------- - ------------
+  2        3 (s + 1)    2
+ s  + 2                s  + 2 s + 2
+
+ 
+Aplicamos transformada inversa, asi la soluci&oacute;n es
+ 
+y(t)=
+2 exp(-t)   7 cos(sqrt(2) t)           /          5 sin(t) \
+--------- + ---------------- - exp(-t) | cos(t) - -------- |
+    3               3                  \              2    /
+
+     19 sqrt(2) sin(sqrt(2) t)
+   + -------------------------
+                 12
+
+ 
+Ahora encontramos la funci&oacute;n de transferencia del sistema
+ 
+ 
+G(s) =
+ 
+(((s + 1)^2 + 1)*(2/(3*(s + 1)) - (s + 1)/((s + 1)^2 + 1) + (7*s)/(3*(s^2 + 2)) + 19/(6*(s^2 + 2)) + 5/(2*((s + 1)^2 + 1))))/(s + 1)
+ 
+/         2      /     2           s + 1          7 s          19
+| ((s + 1)  + 1) | --------- - ------------ + ---------- + ----------
+|                | 3 (s + 1)          2           2            2
+\                \             (s + 1)  + 1   3 (s  + 2)   6 (s  + 2)
+
+             5        \ \
+   + ---------------- | |/(s + 1)
+               2      | |
+     2 ((s + 1)  + 1) / /
+
+</pre><img vspace="5" hspace="5" src="practica6_01.png" alt=""> <h2 id="8">Entregable 2</h2><p>Se muestra la respuesta al impulso del sistema</p><pre class="codeinput">syms <span class="string">t</span>
+transFourierImpulse([2 2 1],[2 1],sign(t),5)
+</pre><pre class="codeoutput"> 
+APLICAMOS TRANSFORMADA DE FOURIER
+ 
+          2
+2 Y(w) - w  Y(w) + w Y(w) 2i
+
+=
+2 X(w) + w X(w) 1i
+
+ 
+SUBSTITUIMOS LA TRANSFORMADA DE LA ENTRADA
+ 
+          2
+2 Y(w) - w  Y(w) + w Y(w) 2i
+
+=
+    4i
+2 - --
+     w
+
+ 
+DESPEJAMOS Y(w)
+ 
+Y(w)=
+     3
+  2 w  + 4 w + 8i
+- ---------------
+       5
+      w  + 4 w
+
+ 
+DESARROLLAMOS LAS FRACCIONES PARCIALES DE Y(w)
+ 
+Y(w)=
+w 1i - 1 - i   w 1i - 1 + 1i   2i
+------------ + ------------- - --
+ 2               2              w
+w  - 2 w + 2    w  + 2 w + 2
+
+ 
+Aplicamos transformada inversa, asi la soluci&oacute;n es
+ 
+y(t)=
+-(- 2 pi sign(t) + pi exp(t (- 1 - i)) (sign(t) + 1) + pi #1 (sign(t) + 1)
+
+   - pi exp(t (- 1 - i)) dirac(t) - pi #1 dirac(t) + pi exp(t (1 - i))
+
+   dirac(t) + pi exp(t (1 + 1i)) dirac(t))/(2 pi)
+
+where
+
+   #1 == exp(t (- 1 + 1i))
+
+
+</pre><img vspace="5" hspace="5" src="practica6_02.png" alt=""> <h2 id="9">Entregable 3</h2><pre>Se muestra la respuesta a entrada cero del sistema</pre><pre class="codeinput">syms <span class="string">t</span>
+transLaplaceCero([2 2 1 1],[2 -1 3],[2 3 1],[0 1],0*t,10)
+</pre><pre class="codeoutput"> 
+APLICAMOS TRANSFORMADA DE LAPLACE y substituimos condiciones iniciales
+ 
+                             2    2         3
+2 Y(s) - 5 s + 2 s Y(s) - 2 s  + s  Y(s) + s  Y(s) - 8
+
+=
+                     2
+2 X(s) - s X(s) + 3 s  X(s) - 3
+
+ 
+SUBSTITUIMOS LA TRANSFORMADA DE LA ENTRADA
+ 
+                             2    2         3
+2 Y(s) - 5 s + 2 s Y(s) - 2 s  + s  Y(s) + s  Y(s) - 8
+
+=
+-3
+
+ 
+DESPEJAMOS Y(s)
+ 
+Y(s)=
+     2
+  2 s  + 5 s + 5
+-----------------
+ 3    2
+s  + s  + 2 s + 2
+
+ 
+DESARROLLAMOS LAS FRACCIONES PARCIALES DE Y(s)
+ 
+Y(s)=
+4 s   11
+--- + --
+ 3     3       2
+-------- + ---------
+  2        3 (s + 1)
+ s  + 2
+
+ 
+Aplicamos transformada inversa, asi la soluci&oacute;n es:
+ 
+y(t)=
+2 exp(-t)   4 cos(sqrt(2) t)   11 sqrt(2) sin(sqrt(2) t)
+--------- + ---------------- + -------------------------
+    3               3                      6
+
+ 
+Representa la respuesta de la entrada cero
+ 
+</pre><img vspace="5" hspace="5" src="practica6_03.png" alt=""> <h2 id="10">Entregable 4</h2><pre>Se muestra la respuesta a estado cero del sistema</pre><pre class="codeinput">syms <span class="string">t</span>
+transLaplaceCeroState([2 2 1 1],[2 -1 3],[0 0 0],[0 0],exp(-t)*cos(t)*heaviside(t),10)
+</pre><pre class="codeoutput"> 
+APLICAMOS TRANSFORMADA DE LAPLACE y substituimos condiciones iniciales
+ 
+                     2         3
+2 Y(s) + 2 s Y(s) + s  Y(s) + s  Y(s)
+
+=
+                     2
+2 X(s) - s X(s) + 3 s  X(s)
+
+ 
+SUBSTITUIMOS LA TRANSFORMADA DE LA ENTRADA
+ 
+                     2         3
+2 Y(s) + 2 s Y(s) + s  Y(s) + s  Y(s)
+
+=
+                                 2
+  2 (s + 1)      s (s + 1)    3 s  (s + 1)
+------------ - ------------ + ------------
+       2              2              2
+(s + 1)  + 1   (s + 1)  + 1   (s + 1)  + 1
+
+ 
+DESPEJAMOS Y(s)
+ 
+Y(s)=
+          2
+       3 s  - s + 2
+--------------------------
+ 4      3      2
+s  + 2 s  + 4 s  + 4 s + 4
+
+ 
+DESARROLLAMOS LAS FRACCIONES PARCIALES DE Y(s)
+ 
+Y(s)=
+     1           3
+ s - -       s - -
+     2           2
+------ - ------------
+ 2        2
+s  + 2   s  + 2 s + 2
+
+ 
+Aplicamos transformada inversa, asi la soluci&oacute;n es:
+ 
+y(t)=
+                         /          5 sin(t) \   sqrt(2) sin(sqrt(2) t)
+cos(sqrt(2) t) - exp(-t) | cos(t) - -------- | - ----------------------
+                         \              2    /              4
+
+</pre><img vspace="5" hspace="5" src="practica6_04.png" alt=""> <h2 id="11">Entregable 5</h2><pre>Se muestra la respuesta total del sistema</pre><pre class="codeinput">syms <span class="string">t</span>
+transLaplaceTotal([2 2 1 1],[2 -1 3],[2 3 1],[0 1],exp(-t)*cos(t)*heaviside(t),10)
+</pre><pre class="codeoutput"> 
+APLICAMOS TRANSFORMADA DE LAPLACE y substituimos condiciones iniciales
+ 
+                             2    2         3
+2 Y(s) - 5 s + 2 s Y(s) - 2 s  + s  Y(s) + s  Y(s) - 8
+
+=
+                     2
+2 X(s) - s X(s) + 3 s  X(s) - 3
+
+ 
+SUBSTITUIMOS LA TRANSFORMADA DE LA ENTRADA
+ 
+                             2    2         3
+2 Y(s) - 5 s + 2 s Y(s) - 2 s  + s  Y(s) + s  Y(s) - 8
+
+=
+                                 2
+  2 (s + 1)      s (s + 1)    3 s  (s + 1)
+------------ - ------------ + ------------ - 3
+       2              2              2
+(s + 1)  + 1   (s + 1)  + 1   (s + 1)  + 1
+
+ 
+DESPEJAMOS Y(s)
+ 
+Y(s)=
+    4       3       2
+ 2 s  + 12 s  + 21 s  + 21 s + 12
+---------------------------------
+ 5      4      3      2
+s  + 3 s  + 6 s  + 8 s  + 8 s + 4
+
+ 
+DESARROLLAMOS LAS FRACCIONES PARCIALES DE Y(s)
+ 
+Y(s)=
+7 s   19                       3
+--- + --                   s - -
+ 3     6       2               2
+-------- + --------- - ------------
+  2        3 (s + 1)    2
+ s  + 2                s  + 2 s + 2
+
+ 
+Aplicamos transformada inversa, asi la soluci&oacute;n es:
+ 
+y(t)=
+2 exp(-t)   7 cos(sqrt(2) t)           /          5 sin(t) \
+--------- + ---------------- - exp(-t) | cos(t) - -------- |
+    3               3                  \              2    /
+
+     19 sqrt(2) sin(sqrt(2) t)
+   + -------------------------
+                 12
+
+ 
+Y la respuesta total es
+ 
+ 
+yt(t) =
+ 
+(2*exp(-t))/3 + (7*cos(2^(1/2)*t))/3 - exp(-t)*(cos(t) - (5*sin(t))/2) + (19*2^(1/2)*sin(2^(1/2)*t))/12 + exp(-t)*cos(t)*heaviside(t)
+ 
+</pre><img vspace="5" hspace="5" src="practica6_05.png" alt=""> <h2 id="12">Entregable 6</h2><pre>Se muestra la respuesta total al escal&oacute;n</pre><pre class="codeinput">syms <span class="string">t</span>
+transLaplaceTotal([2 2 1 1],[2 -1 3],[0 0 0],[0 0],sign(t),10)
+</pre><pre class="codeoutput"> 
+APLICAMOS TRANSFORMADA DE LAPLACE y substituimos condiciones iniciales
+ 
+                     2         3
+2 Y(s) + 2 s Y(s) + s  Y(s) + s  Y(s)
+
+=
+                     2
+2 X(s) - s X(s) + 3 s  X(s)
+
+ 
+SUBSTITUIMOS LA TRANSFORMADA DE LA ENTRADA
+ 
+                     2         3
+2 Y(s) + 2 s Y(s) + s  Y(s) + s  Y(s)
+
+=
+   2
+3 s  laplace(sign(t), t, s) - s laplace(sign(t), t, s) + 2
+
+   laplace(sign(t), t, s)
+
+ 
+DESPEJAMOS Y(s)
+ 
+Y(s)=
+    2
+(3 s  laplace(sign(t), t, s) - s laplace(sign(t), t, s) + 2
+
+                             3    2
+   laplace(sign(t), t, s))/(s  + s  + 2 s + 2)
+
+ 
+DESARROLLAMOS LAS FRACCIONES PARCIALES DE Y(s)
+ 
+Y(s)=
+2 laplace(sign(t), t, s)
+------------------------
+          s + 1
+
+     s laplace(sign(t), t, s) - 2 laplace(sign(t), t, s)
+   + ---------------------------------------------------
+                             2
+                            s  + 2
+
+ 
+Aplicamos transformada inversa, asi la soluci&oacute;n es:
+ 
+y(t)=
+        / laplace(sign(t), t, s)       \
+ilaplace| ----------------------, s, t | 2
+        \           #1                 /
+
+             / s laplace(sign(t), t, s)
+   - ilaplace| ------------------------, s,
+             \            #1
+
+                /  2                              \
+    \           | s  laplace(sign(t), t, s)       |
+  t | + ilaplace| -------------------------, s, t | 3
+    /           \             #1                  /
+
+where
+
+          3    2
+   #1 == s  + s  + 2 s + 2
+
+
+ 
+Y la respuesta total es
+ 
+ 
+yt(t) =
+ 
+sign(t) + 2*ilaplace(laplace(sign(t), t, s)/(s^3 + s^2 + 2*s + 2), s, t) - ilaplace((s*laplace(sign(t), t, s))/(s^3 + s^2 + 2*s + 2), s, t) + 3*ilaplace((s^2*laplace(sign(t), t, s))/(s^3 + s^2 + 2*s + 2), s, t)
+ 
+</pre><img vspace="5" hspace="5" src="practica6_06.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Práctica 6: Sistemas diferenciales
+%% Datos generales:
+% Autor:
+% Marmolejo Martínez Hamlet Jorge
+
+% Grupo: 2TV2 
+
+% Profesor: Dr. Rafael Martínez Martínez
+%%
+%% Objetivos:
+% * Conocer comandos para obtener las funciones de respuesta de un sistema
+% * Graficar las expresiones de respuesta
+% 
+%%
+%% Introducción
+% En esta practica se mostrará como un programa resuelve sistemas
+% diferenciales de orden n mediante la transformada de Laplace y Fourier, el
+% programa despliega la función de trasnferencia, la respuesta al impulso,
+% la respuesta a entrada cero, la respuesta a estado cero, la respuesta
+% total con condiciones iniciales y las gráficas correspondientes
+%% Desarrollo
+%% Entregable 1
+% Se tiene el sistema del ejemplo 
+% Muestra la función de transferencia del sistema.
+% Con la señal de entrada
+% $$x(t)=exp(-t)cos(t)u(t)$$
+
+syms t
+transformadaLaplace([2 2 1 1],[2 -1 3],[2 3 1],[0 1],exp(-t)*cos(t)*heaviside(t),10)
+
+%% Entregable 2
+% Se muestra la respuesta al impulso del sistema
+
+syms t
+transFourierImpulse([2 2 1],[2 1],sign(t),5)
+
+
+%% Entregable 3
+%  Se muestra la respuesta a entrada cero del sistema
+syms t
+transLaplaceCero([2 2 1 1],[2 -1 3],[2 3 1],[0 1],0*t,10)
+
+%% Entregable 4
+%  Se muestra la respuesta a estado cero del sistema
+syms t
+transLaplaceCeroState([2 2 1 1],[2 -1 3],[0 0 0],[0 0],exp(-t)*cos(t)*heaviside(t),10)
+
+%% Entregable 5
+%  Se muestra la respuesta total del sistema
+syms t
+transLaplaceTotal([2 2 1 1],[2 -1 3],[2 3 1],[0 1],exp(-t)*cos(t)*heaviside(t),10)
+%% Entregable 6
+%  Se muestra la respuesta total al escalón
+syms t
+transLaplaceTotal([2 2 1 1],[2 -1 3],[0 0 0],[0 0],sign(t),10)
+
+##### SOURCE END #####
+--></body></html>
